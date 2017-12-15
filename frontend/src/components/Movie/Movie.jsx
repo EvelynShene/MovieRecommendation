@@ -63,52 +63,57 @@ class Movie extends Component {
                     </Col>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                         <div className="section">
-                            <h1>{movieInfo.Title}({movieInfo.Year})</h1>
+                            <h1>{movieInfo.Title}</h1>
                             <div>
-                                <span>Average of {movieInfo.ratingCount} ratings: </span>
+                                <span className="item">Average of {movieInfo.ratingCount} ratings: </span>
                                 <span>{movieInfo.averageRating}</span>
                             </div>
                             {this.props.isLogin &&
                                 <div>
+                                    <span className="item">Your rating: </span>
                                     <Rate allowHalf defaultValue={movieInfo.isRated ? movieInfo.userRating : 0} onChange={this.rate}/>
                                     {/*<Button>Add to list</Button>*/}
                                 </div>
                             }
                             <div>
-                                <span>Directors: </span>
+                                <span className="item">Directors: </span>
                                 <span>{movieInfo.Director}</span>
                             </div>
                             <div>
-                                <span>Writers: </span>
+                                <span className="item">Writers: </span>
                                 <span>{movieInfo.Writer}</span>
                             </div>
                             <div>
-                                <span>Cast: </span>
+                                <span className="item">Cast: </span>
                                 <span>{movieInfo.Actors}</span>
                             </div>
                             <div>
-                                <span>Genre: </span>
+                                <span className="item">Genre: </span>
                                 <span>{movieInfo.Genre}</span>
                             </div>
                             <div>
-                                <span>Country: </span>
+                                <span className="item">Country: </span>
                                 <span>{movieInfo.Country}</span>
                             </div>
                             <div>
-                                <span>Language: </span>
+                                <span className="item">Language: </span>
                                 <span>{movieInfo.Language}</span>
                             </div>
                             <div>
-                                <span>Released: </span>
+                                <span className="item">Released: </span>
                                 <span>{movieInfo.Released}</span>
                             </div>
                             <div>
-                                <span>Runtime: </span>
+                                <span className="item">Runtime: </span>
                                 <span>{movieInfo.Runtime}</span>
                             </div>
                             <div>
-                                <span>Plot: </span>
+                                <span className="item">Plot: </span>
                                 <span>{movieInfo.Plot}</span>
+                            </div>
+                            <div>
+                                <span className="item">Link: </span>
+                                <a target="_blank" href={"http://www.imdb.com/title/" + this.props.movieId}>imdb</a>
                             </div>
                         </div>
                     </Col>

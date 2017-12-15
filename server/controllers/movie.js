@@ -18,29 +18,39 @@ module.exports = {
                 i: imdbId
             }
         });
-        let movieInfo = response.data;
+        let info = response.data;
+        
+        let movies = await Movie.findOrCreate({ where: {imdbId}, defaults: {title: info.Title} });
+        let movieInfo = await MovieInfo.findOne({ imdbId });
+        if (!movieInfo) {
+            await MovieInfo.create({
+                movieId: movies[0].movieId,
+                imdbId: imdbId,
+                title: info.Title
+            })
+        }
 
         let movie = await Movie.findOne({ where: {imdbId: imdbId} });
         let ratingSum = await Rating.sum('rating', { where: {movieId: movie.movieId}});
         let ratingCount = await Rating.count( { where: {movieId: movie.movieId}});
-        movieInfo.ratingCount = ratingCount;
+        info.ratingCount = ratingCount;
         if (ratingCount == 0) {
-            movieInfo.averageRating = 0;
+            info.averageRating = 0;
         } else {
-            movieInfo.averageRating = (ratingSum / ratingCount).toFixed(2);
+            info.averageRating = (ratingSum / ratingCount).toFixed(2);
         }
         
         if (ctx.session.isLogin) {
             let userRating = await Rating.findOne({ where: {userId: ctx.session.userId, movieId: movie.movieId}});
             if (userRating) {
-                movieInfo.isRated = true;
-                movieInfo.userRating = userRating.rating;
+                info.isRated = true;
+                info.userRating = userRating.rating;
             } else {
-                movieInfo.isRated = false;
+                info.isRated = false;
             }
         }
 
-        ctx.rest(movieInfo);
+        ctx.rest(info);
     },
 
     async search(ctx, next) {

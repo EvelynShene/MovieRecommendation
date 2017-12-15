@@ -5,3 +5,8 @@
 .section {
     padding: 0 12px;
 }
+
+.item {
+    color: #666666;
+    font-weight: bold;
+}

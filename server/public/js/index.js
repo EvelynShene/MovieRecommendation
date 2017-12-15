@@ -35630,17 +35630,14 @@ var Movie = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                 "h1",
                                 null,
-                                movieInfo.Title,
-                                "(",
-                                movieInfo.Year,
-                                ")"
+                                movieInfo.Title
                             ),
                             __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                 "div",
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Average of ",
                                     movieInfo.ratingCount,
                                     " ratings: "
@@ -35654,6 +35651,11 @@ var Movie = function (_Component) {
                             this.props.isLogin && __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                 "div",
                                 null,
+                                __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                                    "span",
+                                    { className: "item" },
+                                    "Your rating: "
+                                ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_antd_lib_rate___default.a, { allowHalf: true, defaultValue: movieInfo.isRated ? movieInfo.userRating : 0, onChange: this.rate })
                             ),
                             __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35661,7 +35663,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Directors: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35675,7 +35677,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Writers: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35689,7 +35691,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Cast: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35703,7 +35705,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Genre: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35717,7 +35719,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Country: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35731,7 +35733,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Language: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35745,7 +35747,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Released: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35759,7 +35761,7 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Runtime: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
@@ -35773,13 +35775,27 @@ var Movie = function (_Component) {
                                 null,
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
-                                    null,
+                                    { className: "item" },
                                     "Plot: "
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                                     "span",
                                     null,
                                     movieInfo.Plot
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                                "div",
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                                    "span",
+                                    { className: "item" },
+                                    "Link: "
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                                    "a",
+                                    { target: "_blank", href: "http://www.imdb.com/title/" + this.props.movieId },
+                                    "imdb"
                                 )
                             )
                         )
@@ -36740,7 +36756,7 @@ exports = module.exports = __webpack_require__(13)(undefined);
 
 
 // module
-exports.push([module.i, ".poster {\n    max-width: 100%;\n}\n\n.section {\n    padding: 0 12px;\n}", ""]);
+exports.push([module.i, ".poster {\n    max-width: 100%;\n}\n\n.section {\n    padding: 0 12px;\n}\n\n.item {\n    color: #666666;\n    font-weight: bold;\n}", ""]);
 
 // exports
 
