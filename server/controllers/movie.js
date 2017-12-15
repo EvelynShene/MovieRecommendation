@@ -1,5 +1,6 @@
 const url = require('url');
 const axios = require('axios');
+const random = require("random-js")();
 const config = require('../config');
 const Movie = require('./../models/movie');
 const Rating = require('./../models/rating');
@@ -29,6 +30,7 @@ module.exports = {
                 title: info.Title
             })
         }
+        info.similar = movieInfo.similar || [];
 
         let movie = await Movie.findOne({ where: {imdbId: imdbId} });
         let ratingSum = await Rating.sum('rating', { where: {movieId: movie.movieId}});
@@ -63,6 +65,16 @@ module.exports = {
             }
         });
         ctx.rest(response.data.Search);
+    },
+    
+    async picks(ctx, next) {
+        let randomIds = [];
+        let count = await Movie.count();
+        for (let i=0; i<10; i++) {
+            randomIds.push(random.integer(1, count));
+        }
+        picks = await Movie.findAll({ where: {movieId: randomIds}});
+        ctx.rest({picks});
     },
 
     async rate(ctx, next) {

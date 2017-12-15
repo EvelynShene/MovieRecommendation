@@ -19,6 +19,7 @@ router.post('/api/user/login', userController.login)
     .get('/api/user/info', userController.getUserInfo)
     .get('/api/movie/info', movieController.getMovieInfo)
     .post('/api/movie/rate', movieController.rate)
-    .get('/api/movie/search', movieController.search);
+    .get('/api/movie/search', movieController.search)
+    .get('/api/movie/picks', movieController.picks);
 
 module.exports = router;

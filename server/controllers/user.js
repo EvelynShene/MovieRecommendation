@@ -95,7 +95,7 @@ module.exports = {
             for (let i=0; i<movies.length; i++) {
                 rated.push({imdbId: movies[i].imdbId, title: movies[i].title, rating: ratings[i].rating});
             }
-            console.log(rated);
+
             let userInfo = await UserInfo.findOne({ userId: ctx.session.userId});
             ctx.rest({rated: rated, recommendations: userInfo.recommendations});
         } else {

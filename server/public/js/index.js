@@ -35320,22 +35320,42 @@ var Index = function (_Component) {
         key: 'componentDidMount',
         value: function () {
             var _ref = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var response;
+                var pickResponse, response;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_8_axios___default.a.get('/api/user/info');
+                                return __WEBPACK_IMPORTED_MODULE_8_axios___default.a.get('/api/movie/picks');
 
                             case 2:
+                                pickResponse = _context.sent;
+
+                                this.setState({
+                                    picks: pickResponse.data.picks
+                                });
+
+                                if (!this.props.isLogin) {
+                                    _context.next = 9;
+                                    break;
+                                }
+
+                                _context.next = 7;
+                                return __WEBPACK_IMPORTED_MODULE_8_axios___default.a.get('/api/user/info');
+
+                            case 7:
                                 response = _context.sent;
 
                                 this.setState({
                                     rated: response.data.rated,
-                                    recommendations: response.data.recommendations,
+                                    recommendations: response.data.recommendations
+                                });
+
+                            case 9:
+                                this.setState({
                                     isDone: true
                                 });
+
                                 // if ('Title' in response.data && response.data.Title !== "") {
                                 //     this.setState({
                                 //         movieInfo: response.data,
@@ -35347,7 +35367,7 @@ var Index = function (_Component) {
                                 //     });
                                 // }
 
-                            case 4:
+                            case 10:
                             case 'end':
                                 return _context.stop();
                         }
@@ -35372,20 +35392,7 @@ var Index = function (_Component) {
                     'loading...'
                 );
             }
-            var ratedMovies = this.state.rated.map(function (movie) {
-                return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
-                    'li',
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
-                        'a',
-                        { href: "/movie/" + movie.imdbId },
-                        movie.title
-                    ),
-                    ': ',
-                    movie.rating
-                );
-            });
-            var recommendationMovies = this.state.recommendations.map(function (movie) {
+            var pickMovies = this.state.picks.map(function (movie) {
                 return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                     'li',
                     null,
@@ -35396,6 +35403,34 @@ var Index = function (_Component) {
                     )
                 );
             });
+            var ratedMovies = [];
+            var recommendationMovies = [];
+            if (this.props.isLogin) {
+                ratedMovies = this.state.rated.map(function (movie) {
+                    return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                            'a',
+                            { href: "/movie/" + movie.imdbId },
+                            movie.title
+                        ),
+                        ': ',
+                        movie.rating
+                    );
+                });
+                recommendationMovies = this.state.recommendations.map(function (movie) {
+                    return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                        'li',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                            'a',
+                            { href: "/movie/" + movie.imdbId },
+                            movie.title
+                        )
+                    );
+                });
+            }
             return __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                 'div',
                 null,
@@ -35426,7 +35461,12 @@ var Index = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
                     'h2',
                     null,
-                    'popular movies'
+                    'random picks'
+                ),
+                __WEBPACK_IMPORTED_MODULE_7_react___default.a.createElement(
+                    'ul',
+                    null,
+                    pickMovies
                 )
             );
         }
@@ -35606,12 +35646,23 @@ var Movie = function (_Component) {
                 );
             }
             var movieInfo = this.state.movieInfo;
+            var similarMovies = movieInfo.similar.map(function (movie) {
+                return __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                    "li",
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                        "a",
+                        { href: "/movie/" + movie[0] },
+                        movie[1]
+                    )
+                );
+            });
             return __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                 "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_antd_lib_row___default.a,
-                    null,
+                    { className: "row" },
                     __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_5_antd_lib_col___default.a,
                         { xs: 24, sm: 24, md: 8, lg: 8, xl: 8 },
@@ -35803,11 +35854,20 @@ var Movie = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_antd_lib_row___default.a,
-                    null,
+                    { className: "row" },
                     __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
-                        "h2",
-                        null,
-                        "People who liked this also liked..."
+                        "div",
+                        { className: "section" },
+                        __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                            "h2",
+                            null,
+                            "People who liked this also liked..."
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_13_react___default.a.createElement(
+                            "ul",
+                            null,
+                            similarMovies
+                        )
                     )
                 )
             );
@@ -36756,7 +36816,7 @@ exports = module.exports = __webpack_require__(13)(undefined);
 
 
 // module
-exports.push([module.i, ".poster {\n    max-width: 100%;\n}\n\n.section {\n    padding: 0 12px;\n}\n\n.item {\n    color: #666666;\n    font-weight: bold;\n}", ""]);
+exports.push([module.i, ".row {\n    margin-bottom: 30px;\n}\n\n.poster {\n    max-width: 100%;\n}\n\n.section {\n    padding: 0 12px;\n}\n\n.item {\n    color: #666666;\n    font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -50281,7 +50341,7 @@ var Footer = __WEBPACK_IMPORTED_MODULE_1_antd_lib_layout___default.a.Footer;
 function CommonFooter(props) {
     return __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
         Footer,
-        { style: { textAlign: 'center' } },
+        { style: { textAlign: 'center', background: '#ffffff' } },
         'Movie Recommendation \xA92017 Created by Group'
     );
 }

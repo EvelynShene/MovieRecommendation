@@ -4,7 +4,7 @@ const {  Footer } = Layout
 
 function CommonFooter(props) {
     return (
-        <Footer style={{ textAlign: 'center' }}>
+        <Footer style={{ textAlign: 'center', background: '#ffffff' }}>
             Movie Recommendation ©2017 Created by Group
         </Footer>
     )

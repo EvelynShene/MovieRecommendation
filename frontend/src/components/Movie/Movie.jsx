@@ -53,9 +53,12 @@ class Movie extends Component {
             return <div>loading...</div>
         }
         const movieInfo = this.state.movieInfo;
+        const similarMovies = movieInfo.similar.map((movie) =>
+            <li><a href={"/movie/"+movie[0]}>{movie[1]}</a></li>
+        );
         return ( 
             <div>
-                <Row>
+                <Row className="row">
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <div className="section">
                             <img className="poster" src={movieInfo.Poster} stalt="poster"/>
@@ -119,8 +122,11 @@ class Movie extends Component {
                     </Col>
                 </Row>    
                 
-                <Row>
-                    <h2>People who liked this also liked...</h2>
+                <Row className="row">
+                    <div className="section">
+                        <h2>People who liked this also liked...</h2>
+                        <ul>{similarMovies}</ul>
+                    </div>
                 </Row>
             </div>
         );
