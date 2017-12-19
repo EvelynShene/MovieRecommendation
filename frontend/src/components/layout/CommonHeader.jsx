@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Row, Col, Input, Menu, Dropdown, Icon } from 'antd';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, withRouter } from 'react-router-dom';
 const {  Header } = Layout;
 const Search = Input.Search;
 
@@ -22,9 +22,9 @@ function CommonHeader(props) {
             <Row type="flex" justify="space-between" className="container">
                 <Col xs={0} sm={6} md={8} lg={8} xl={8}>
                     <div className="logo">
-                        <a href="/">
+                        <Link to="/">
                             <img src="/images/logo.png" alt="logo"/>
-                        </a>
+                        </Link>
                     </div>
                     {/*<Menu
                         theme="dark"
@@ -37,7 +37,13 @@ function CommonHeader(props) {
                 <Col xs={12} sm={12} md={8} lg={8} xl={8}>
                     <Search
                         placeholder="search movies"
-                        onSearch={props.onSearch}
+                        onSearch={(value) => {
+                            props.history.push({
+                                pathname: '/search',
+                                search: '?q='+value
+                            });
+                            props.onSearch(value);
+                        }}
                         enterButton
                     />
                 </Col>
@@ -53,8 +59,8 @@ function CommonHeader(props) {
                             </div>
                         ) : (
                             <div>
-                                <a href="/login" style={{margin: "0 12px"}}>Log in</a>
-                                <a href="/signup" style={{margin: "0 12px"}}>Sign up</a>
+                                <Link to="/login" style={{margin: "0 12px"}}>Log in</Link>
+                                <Link to="/signup" style={{margin: "0 12px"}}>Sign up</Link>
                             </div>        
                         )}
                     </div>
@@ -65,4 +71,4 @@ function CommonHeader(props) {
 }
 
 
-export default CommonHeader
+export default withRouter(CommonHeader)

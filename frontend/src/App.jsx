@@ -16,12 +16,15 @@ import {
 } from './components/index';
 import './style.css';
 
+
 class App extends Component {
     constructor(props) {
         super(props);
+        let url = new URL(window.location.href);
         this.state = {
             isLogin: false,
-            username: ''
+            username: '',
+            q: url.searchParams.get("q")
         };
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
@@ -60,20 +63,22 @@ class App extends Component {
     }
 
     async search(value) {
-        window.location.href = `/search?q=${value}`;
+        this.setState({
+            q: value
+        })
     }
 
     render() {
         return (
-            <Layout>
-                <CommonHeader 
-                    isLogin={this.state.isLogin} 
-                    username={this.state.username} 
-                    onLogout={this.logout}
-                    onSearch={this.search}
-                />
-                <Content className="container content">
-                    <Router>
+            <Router>
+                <Layout>
+                    <CommonHeader 
+                        isLogin={this.state.isLogin} 
+                        username={this.state.username} 
+                        onLogout={this.logout}
+                        onSearch={this.search}
+                    />
+                    <Content className="container content">                    
                         <Switch>
                             <Route exact path="/" render={() => (
                                 <Index isLogin={this.state.isLogin} />
@@ -102,14 +107,14 @@ class App extends Component {
                             )}/>
                             {/*<Route path="/movie/:id/post/:id" component={Movie}/>*/}
                             <Route path="/search" render={() => (
-                                <Search/>
+                                <Search q={this.state.q} />
                             )}/>
                             <Route component={NoMatch}/>
-                        </Switch>
-                    </Router>
-                </Content>
-                <CommonFooter />
-            </Layout>
+                        </Switch>  
+                    </Content>
+                    <CommonFooter />
+                </Layout>
+            </Router>
         );
     }
 }

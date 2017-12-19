@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function MovieItem(props) {
     return (
         <div style={{ margin: "15px"}}>
-            <a href={"/movie/"+props.imdbID}>
+            <Link to={"/movie/"+props.imdbID}>
                 <img src={props.poster} alt={props.title} width="100"/>
-            </a>
-            <div><a href={"/movie/"+props.imdbID}>{props.title}</a></div>
+            </Link>
+            <div><Link to={"/movie/"+props.imdbID}>{props.title}</Link></div>
         </div>
     )
 }

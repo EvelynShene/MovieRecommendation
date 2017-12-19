@@ -49,8 +49,6 @@ class Index extends Component {
         if (!this.state.isDone) {
             return <div>loading...</div>
         }
-        console.log(this.props);
-        console.log(this.state);
         const topPicks = [
             {imdbId: "tt0111161", title: "The Shawshank Redemption"},
             {imdbId: "tt0068646", title: "The Godfather"},
@@ -64,19 +62,19 @@ class Index extends Component {
             {imdbId: "tt0110912", title: "Pulp Fiction"},
         ];
         const topMovies = topPicks.map((movie) =>
-            <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
+            <li key={movie.imdbId}><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
         );
         let pickMovies = this.state.picks.map((movie) =>
-            <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
+            <li key={movie.imdbId}><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
         );
         let ratedMovies = [];
         let recommendationMovies = [];
         if (this.props.isLogin) {
             ratedMovies = this.state.rated.map((movie) =>
-                <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link>: {movie.rating}</li>
+                <li key={movie.imdbId}><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link>: {movie.rating}</li>
             );
             recommendationMovies = this.state.recommendations.map((movie) =>
-                <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
+                <li key={movie.imdbId}><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
             );
         }
         return ( 
