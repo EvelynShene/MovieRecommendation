@@ -7,7 +7,8 @@ const MovieInfoSchema = new Schema({
     title: { type: String, default: '' },
     // avarageRating: { type: Double, default: 0 },
     // ratingNum: { type: int, default: 0}
-    similar: { type: Array,default:[] },
+    similar: { type: Array, default: [] },
+    average: {type: Number, default: 0},
     posts: { type: Array, default: [] },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Col } from "antd";
 import axios from 'axios';
 // import './Home.css';
@@ -48,17 +49,34 @@ class Index extends Component {
         if (!this.state.isDone) {
             return <div>loading...</div>
         }
+        console.log(this.props);
+        console.log(this.state);
+        const topPicks = [
+            {imdbId: "tt0111161", title: "The Shawshank Redemption"},
+            {imdbId: "tt0068646", title: "The Godfather"},
+            {imdbId: "tt0114814", title: "The Usual Suspects"},
+            {imdbId: "tt0108052", title: "Schindler's List"},
+            {imdbId: "tt0137523", title: "Fight Club"},
+            {imdbId: "tt0073486", title: "One Flew Over the Cuckoo's Nest"},
+            {imdbId: "tt0245429", title: "Spirited Away"},
+            {imdbId: "tt0468569", title: "The Dark Knight"},
+            {imdbId: "tt0910970", title: "WALL·E"},
+            {imdbId: "tt0110912", title: "Pulp Fiction"},
+        ];
+        const topMovies = topPicks.map((movie) =>
+            <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
+        );
         let pickMovies = this.state.picks.map((movie) =>
-            <li><a href={"/movie/"+movie.imdbId}>{movie.title}</a></li>
+            <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
         );
         let ratedMovies = [];
         let recommendationMovies = [];
         if (this.props.isLogin) {
             ratedMovies = this.state.rated.map((movie) =>
-                <li><a href={"/movie/"+movie.imdbId}>{movie.title}</a>: {movie.rating}</li>
+                <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link>: {movie.rating}</li>
             );
             recommendationMovies = this.state.recommendations.map((movie) =>
-                <li><a href={"/movie/"+movie.imdbId}>{movie.title}</a></li>
+                <li><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
             );
         }
         return ( 
@@ -71,6 +89,8 @@ class Index extends Component {
                         <ul>{ratedMovies}</ul>
                     </div>  
                 }
+                <h2>top picks</h2>
+                <ul>{topMovies}</ul>
                 <h2>random picks</h2>
                 <ul>{pickMovies}</ul>
             </div>
