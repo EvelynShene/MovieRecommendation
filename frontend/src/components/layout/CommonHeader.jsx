@@ -8,9 +8,9 @@ function CommonHeader(props) {
     
     const userMenu = (
         <Menu>
-            <Menu.Item>
+            {/*<Menu.Item>
                 <a href="#">Profile</a>
-            </Menu.Item>
+            </Menu.Item>*/}
             <Menu.Item>
                 <a href="#" onClick={props.onLogout}>Logout</a>
             </Menu.Item>
@@ -34,7 +34,7 @@ function CommonHeader(props) {
                         <Menu.Item key="1"><a href="/">Home</a></Menu.Item>
                     </Menu>*/}
                 </Col>
-                <Col xs={12} sm={12} md={8} lg={8} xl={8}>
+                <Col xs={10} sm={12} md={8} lg={8} xl={8}>
                     <Search
                         placeholder="search movies"
                         onSearch={(value) => {
@@ -47,7 +47,7 @@ function CommonHeader(props) {
                         enterButton
                     />
                 </Col>
-                <Col xs={10} sm={6} md={8} lg={8} xl={8}>
+                <Col xs={12} sm={6} md={8} lg={8} xl={8}>
                     <div style={{float: "right"}}>
                         {props.isLogin ? (
                             <div>
@@ -59,8 +59,8 @@ function CommonHeader(props) {
                             </div>
                         ) : (
                             <div>
-                                <Link to="/login" style={{margin: "0 12px"}}>Log in</Link>
-                                <Link to="/signup" style={{margin: "0 12px"}}>Sign up</Link>
+                                <Link to="/login" style={{margin: "0 6px"}}>Log in</Link>
+                                <Link to="/signup" style={{margin: "0 6px"}}>Sign up</Link>
                             </div>        
                         )}
                     </div>

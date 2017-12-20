@@ -69,9 +69,9 @@ class Index extends Component {
         );
         let ratedMovies = [];
         let recommendationMovies = [];
-        if (this.props.isLogin) {
+        if (this.props.isLogin && this.state.rated && this.state.recommendations) {
             ratedMovies = this.state.rated.map((movie) =>
-                <li key={movie.imdbId}><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link>: {movie.rating}</li>
+                <li key={movie.imdbId}><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>
             );
             recommendationMovies = this.state.recommendations.map((movie) =>
                 <li key={movie.imdbId}><Link to={"/movie/"+movie.imdbId}>{movie.title}</Link></li>

@@ -17,10 +17,10 @@ class Movie extends Component {
         // this.logout = this.logout.bind(this);
     }
 
-    async componentDidMount() {
+    async getMovieInfo(imdbId) {
         let response = await axios.get('/api/movie/info', {
             params: {
-                id: this.props.movieId
+                id: imdbId
             }
         });
         if ('Title' in response.data && response.data.Title !== "") {
@@ -33,7 +33,19 @@ class Movie extends Component {
                 isError: true
             });
         }
-        
+    }
+
+    async componentDidMount() {
+        this.getMovieInfo(this.props.movieId);       
+    }
+
+    async componentWillReceiveProps(nextProps) {
+        if (nextProps.movieId !== this.state.movieId) {
+            this.setState({
+                isDone: false
+            })
+            this.getMovieInfo(nextProps.movieId);
+        }
     }
 
     async rate(value) {
@@ -54,7 +66,7 @@ class Movie extends Component {
         }
         const movieInfo = this.state.movieInfo;
         const similarMovies = movieInfo.similar.map((movie) =>
-            <li><a href={"/movie/"+movie[0]}>{movie[1]}</a></li>
+            <li key={movie[0]}><Link to={"/movie/"+movie[0]}>{movie[1]}</Link></li>
         );
         return ( 
             <div>

@@ -96,21 +96,21 @@ module.exports = {
             for (let i=0; i<movies.length; i++) {
                 rated.push({imdbId: movies[i].imdbId, title: movies[i].title, rating: ratings[i].rating});
             }
-            let recommendations = [];
-            for (let i=0; i<rated.length; i++) {
-                if (rated[i].rating >= 3) {
-                    let movieInfo = await MovieInfo.findOne({ imdbId: rated[i].imdbId });
-                    let similar = movieInfo.similar;
-                    for (let j=0; j<similar.length; j++) {
-                        let similarInfo = await MovieInfo.findOne({ imdbId: similar[j][0] });
-                        recommendations.push({imdbId: similar[j][0], title: similar[j][1], score: rated[i].rating * similarInfo.average });
-                    }
-                }
-            }
-            recommendations.sort((a, b) => b.score - a.score);
-            recommendations = recommendations.slice(0, 10);
-            // let userInfo = await UserInfo.findOne({ userId: ctx.session.userId});
-            ctx.rest({isLogin: true, rated, recommendations});
+            // let recommendations = [];
+            // for (let i=0; i<rated.length; i++) {
+            //     if (rated[i].rating >= 3) {
+            //         let movieInfo = await MovieInfo.findOne({ imdbId: rated[i].imdbId });
+            //         let similar = movieInfo.similar;
+            //         for (let j=0; j<similar.length; j++) {
+            //             let similarInfo = await MovieInfo.findOne({ imdbId: similar[j][0] });
+            //             recommendations.push({imdbId: similar[j][0], title: similar[j][1], score: rated[i].rating * similarInfo.average });
+            //         }
+            //     }
+            // }
+            // recommendations.sort((a, b) => b.score - a.score);
+            // recommendations = recommendations.slice(0, 10);
+            let userInfo = await UserInfo.findOne({ userId: ctx.session.userId});
+            ctx.rest({isLogin: true, rated: rated, recommendations: userInfo.recommendations});
         } else {
             ctx.rest({
                 isLogin: false,

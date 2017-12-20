@@ -28,9 +28,11 @@ module.exports = {
                 movieId: movies[0].movieId,
                 imdbId: imdbId,
                 title: info.Title
-            })
-        }
-        info.similar = movieInfo.similar || [];
+            });
+            info.similar = [];
+        } else {
+            info.similar = movieInfo.similar;
+        }    
 
         let movie = await Movie.findOne({ where: {imdbId: imdbId} });
         let ratingSum = await Rating.sum('rating', { where: {movieId: movie.movieId}});
@@ -98,6 +100,34 @@ module.exports = {
                 defaults: {rating: ctx.request.body.rating} 
             });
             await ratings[0].update({ rating: ctx.request.body.rating });
+
+            //update recommendations
+            ratings = await Rating.findAll({ where: {userId: ctx.session.userId}});
+            let movieIds = ratings.map( rating => rating.movieId);
+            movies = await Movie.findAll({ where: {movieId: movieIds}});
+            let rated = [];
+            for (let i=0; i<movies.length; i++) {
+                rated.push({imdbId: movies[i].imdbId, title: movies[i].title, rating: ratings[i].rating});
+            }
+            let recommendations = [];
+            let imdbIds = [];
+            for (let i=0; i<rated.length; i++) {
+                if (rated[i].rating >= 3) {
+                    let movieInfo = await MovieInfo.findOne({ imdbId: rated[i].imdbId });
+                    let similar = movieInfo.similar;
+                    for (let j=0; j<similar.length; j++) {
+                        if (imdbIds.includes(similar[j][0])) continue;
+                        let similarInfo = await MovieInfo.findOne({ imdbId: similar[j][0] });
+                        recommendations.push({imdbId: similar[j][0], title: similar[j][1], score: rated[i].rating * similarInfo.average });
+                        imdbIds.push(similar[j][0]);
+                    }
+                }
+            }
+            recommendations.sort((a, b) => b.score - a.score);
+            recommendations = recommendations.slice(0, 10);
+            // let userInfo = await UserInfo.findOne({ userId: ctx.session.userId });
+            await UserInfo.findOneAndUpdate({ userId: ctx.session.userId }, {recommendations: recommendations});
+
             ctx.rest({
                 isRated: true,
                 message: 'Success!'
